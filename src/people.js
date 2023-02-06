@@ -19,5 +19,9 @@ const getPeople = async () => {
     const data = await readPeople();
     return data;
 }; 
-
-module.exports = getPeople;
+const findPeople = async (id) => {
+    const people = await readPeople();
+    const peoplefinded = people.find((pessoa) => pessoa.id === Number(id));
+    return peoplefinded;
+};
+module.exports = { getPeople, findPeople };

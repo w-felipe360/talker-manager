@@ -1,5 +1,5 @@
 const express = require('express');
-const getPeople = require('./people');
+const people = require('./people');
 
 const app = express();
 app.use(express.json());
@@ -11,9 +11,19 @@ const PORT = '3000';
 app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
 });
+
 app.get('/talker', async (_req, res) => {
-const result = await getPeople();
+const result = await people.getPeople();
 res.status(200).json(result);
+});
+
+app.get('/talker/:id', async (req, res) => {
+  const { id } = req.params;
+  const result = await people.findPeople(id);
+  if (!result) {
+    res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+  }
+  res.status(200).json(result);
 });
 
 app.listen(PORT, () => {
