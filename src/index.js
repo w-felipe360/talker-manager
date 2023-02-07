@@ -4,7 +4,7 @@ const { generateToken, validaEmail,
    validaPassword,
     validaToken, 
     validaAge,
-     validaName,
+     validaName, // VALIDAÇÕES
      validaTalkAndWatched,
      rateValidation,
      validateWatchedAt,
@@ -52,11 +52,25 @@ app.post('/login',
   rateValidation,
   validateWatchedAt,
   isInt,
-
  async (req, res) => {
   const { name, age, talk } = req.body;
   const newPerson = await people.createPeople(name, age, talk);
   return res.status(201).send(newPerson);
+});
+app.put('/talker/:id', 
+validaToken,
+validaAge,
+validaName,
+validaTalkAndWatched,
+rateValidation,
+validateWatchedAt,
+isInt,
+async (req, res) => {
+  const { id } = req.params;
+  const { name, age, talk } = req.body;
+  const updatedPerson = await people.updatedPerson(id, name, age, talk);
+  console.log(updatedPerson);
+  return res.status(200).send(updatedPerson);
 });
 
 app.listen(PORT, () => {
