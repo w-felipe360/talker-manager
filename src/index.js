@@ -1,6 +1,15 @@
 const express = require('express');
 const people = require('./people');
-const { generateToken, validaEmail, validaPassword } = require('./validations');
+const { generateToken, validaEmail,
+   validaPassword,
+    validaToken, 
+    validaAge,
+     validaName,
+     validaTalkAndWatched,
+     rateValidation,
+     validateWatchedAt,
+     isInt,
+     } = require('./validations');
 
 const app = express();
 app.use(express.json());
@@ -33,6 +42,21 @@ app.post('/login',
   async (_req, res) => {
   const myToken = generateToken(16);
   return res.status(HTTP_OK_STATUS).send({ token: myToken });
+});
+
+  app.post('/talker', 
+  validaToken,
+  validaAge,
+  validaName,
+  validaTalkAndWatched,
+  rateValidation,
+  validateWatchedAt,
+  isInt,
+
+ async (req, res) => {
+  const { name, age, talk } = req.body;
+  const newPerson = await people.createPeople(name, age, talk);
+  return res.status(201).send(newPerson);
 });
 
 app.listen(PORT, () => {

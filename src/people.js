@@ -25,11 +25,29 @@ const findPeople = async (id) => {
     const peoplefinded = people.find((pessoa) => pessoa.id === Number(id));
     return peoplefinded;
 };
-    // try {
-    //     const writePeople = async (people) => {
-    //     const contentWrileFile = await fs.writeFile(completePath, 'utf-8');
-    // };
-    // } catch (e) {
-    //     console.error('Erro na escrita do arquivo', e.message);
-    // }
-module.exports = { getPeople, findPeople };
+const writePeople = async (content) => {
+    try {
+    await fs.writeFile(completePath, JSON.stringify(content, null, 2, 'utf-8'));
+    } catch (e) {
+        console.error(e.message);
+    }
+}; 
+        const createPeople = async (name, age, talk) => {
+                const data = await readPeople();
+                const newPerson = {
+                    name,
+                    age,
+                    id: data.length + 1,
+                    talk: {
+                      watchedAt: talk.watchedAt,
+                      rate: talk.rate,
+                    },
+                  };
+                  data.push(newPerson);
+                //   console.log(newPerson);
+                //   data.id += 1;
+                  await writePeople(data);
+                  return newPerson;
+                };
+
+module.exports = { getPeople, findPeople, createPeople };
