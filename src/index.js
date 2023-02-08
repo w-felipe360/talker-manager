@@ -69,7 +69,6 @@ async (req, res) => {
   const { id } = req.params;
   const { name, age, talk } = req.body;
   const updatedPerson = await people.updatedPerson(id, name, age, talk);
-  console.log(updatedPerson);
   return res.status(200).send(updatedPerson);
 });
 

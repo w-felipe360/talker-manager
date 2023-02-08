@@ -51,11 +51,14 @@ const writePeople = async (content) => {
                 };
                 const updatedPerson = async (id, name, age, talk) => {
                     const data = await readPeople();
+                    const findMyPeople = { id: Number(id), name, age, talk };
+                    
                      const people = data.map((pessoa) => {
                         if (pessoa.id === Number(id)) {
                             return { ...pessoa, name, age, talk };
                         } return pessoa;
                      });
                    await writePeople(people);
+                   return findMyPeople;
                 };
 module.exports = { getPeople, findPeople, createPeople, updatedPerson };
