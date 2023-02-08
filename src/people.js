@@ -61,4 +61,13 @@ const writePeople = async (content) => {
                    await writePeople(people);
                    return findMyPeople;
                 };
-module.exports = { getPeople, findPeople, createPeople, updatedPerson };
+                    // fazer uma função parecida com a de cima e que mexa com o spread talvez, se possível ver alguma videoaula
+                    const deletePerson = async (id) => {
+                    const data = await readPeople();
+                    const findPerson = data.find((person) => person.id === Number(id));
+                    const newData = data.filter((person) => person !== findPerson);
+                    const updatedData = newData.map((person) => ({ ...person, id: person.id - 1 }));
+                  return writePeople(updatedData);
+                };
+
+module.exports = { getPeople, findPeople, createPeople, updatedPerson, deletePerson };

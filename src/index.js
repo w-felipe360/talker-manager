@@ -72,6 +72,13 @@ async (req, res) => {
   return res.status(200).send(updatedPerson);
 });
 
+app.delete('/talker/:id', validaToken, async (req, res) => {
+  const { id } = req.params;
+  const newData = await people.deletePerson(id);
+  // console.log(newData[0]);
+  return res.status(204).send(newData);
+});
+
 app.listen(PORT, () => {
   console.log('Online');
 });
